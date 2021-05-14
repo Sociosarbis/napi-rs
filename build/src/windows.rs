@@ -81,7 +81,7 @@ pub fn setup() {
     hasher.finish()
   };
 
-  // Encode version, arch, and dist_url to detect and reaquire node.lib when these 3 change.
+  // Encode version, arch, and dist_url to detect and require node.lib when these 3 change.
   let node_lib_file_name = format!(
     "node-{version}-{arch}-{dist_url_hash}.lib",
     version = node_version,
