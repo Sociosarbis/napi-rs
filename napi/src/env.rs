@@ -1288,7 +1288,6 @@ impl Env {
   /// }
   ///
   #[cfg(feature = "serde-json")]
-  #[inline]
   pub fn from_js_value<T, V>(&self, value: V) -> Result<T>
   where
     T: DeserializeOwned + ?Sized,
