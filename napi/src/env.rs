@@ -1026,7 +1026,6 @@ impl Env {
   }
 
   #[cfg(feature = "napi3")]
-  #[inline]
   pub fn add_env_cleanup_hook<T, F>(
     &mut self,
     cleanup_data: T,
@@ -1129,7 +1128,6 @@ impl Env {
   }
 
   #[cfg(feature = "napi6")]
-  #[inline]
   /// This API associates data with the currently running Agent. data can later be retrieved using `Env::get_instance_data()`.
   ///
   /// Any existing data associated with the currently running Agent which was set by means of a previous call to `Env::set_instance_data()` will be overwritten.
