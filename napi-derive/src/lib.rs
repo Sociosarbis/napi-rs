@@ -78,6 +78,10 @@ pub fn js_function(attr: TokenStream, input: TokenStream) -> TokenStream {
   let arg_len_span = arg_len.length;
   let input = parse_macro_input!(input as ItemFn);
   let mut js_fn = JsFunction::new();
+  // ItemFn is free-standing function compared to method.
+  // each method in Fold trait traverses respective syntax tree.
+  // traverse free-standing function here to invoke each method of Fold trait defined above and
+  // collect information for fields of JsFunction
   js_fn.fold_item_fn(input);
   let fn_name = js_fn.name.unwrap();
   let fn_block = js_fn.block;
