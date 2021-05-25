@@ -14,8 +14,12 @@ struct ArgLength {
 
 impl Parse for ArgLength {
   fn parse(input: ParseStream) -> Result<Self> {
+    // Token! is a type macro
+    // parse literal delimited with comma
     let vars = Punctuated::<Literal, Token![,]>::parse_terminated(input)?;
     Ok(ArgLength {
+      // the first arg indicates the arg length of js function
+      // return numeric Literal
       length: vars
         .first()
         .cloned()
