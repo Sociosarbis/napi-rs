@@ -201,17 +201,22 @@ impl<T: 'static, ES: ErrorStrategy::T> ThreadsafeFunction<T, ES> {
     let mut raw_tsfn = ptr::null_mut();
     let ptr = Box::into_raw(Box::new(callback)) as *mut _;
     check_status!(unsafe {
+      // because js function can't be called on threads other than main thread, so create a thread-safe version for it
       sys::napi_create_threadsafe_function(
         env,
+        // the actual js function
         func.0.value,
         ptr::null_mut(),
         async_resource_name,
         max_queue_size,
         initial_thread_count,
         ptr,
+        // function to call when the napi_threadsafe_function is being destroyed
         Some(thread_finalize_cb::<T, V, R>),
         ptr,
+        // function to call when to run the actual js function
         Some(call_js_cb::<T, V, R, ES>),
+        // return value (output) of this function, the output is an asynchronous thread-safe function
         &mut raw_tsfn,
       )
     })?;
@@ -340,6 +345,7 @@ unsafe extern "C" fn thread_finalize_cb<T: 'static, V: NapiRaw, R>(
 unsafe extern "C" fn call_js_cb<T: 'static, V: NapiRaw, R, ES>(
   raw_env: sys::napi_env,
   js_callback: sys::napi_value,
+  // context here is a function to process data before passing that to the js funcion
   context: *mut c_void,
   data: *mut c_void,
 ) where
