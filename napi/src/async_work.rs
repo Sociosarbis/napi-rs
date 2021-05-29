@@ -10,6 +10,8 @@ use crate::{
 
 struct AsyncWork<T: Task> {
   inner_task: T,
+  // deferred object is bound to a promise object and is used later by napi_resolve_deferred or napi_reject_deferred
+  // to resolve or reject it's associated promise
   deferred: sys::napi_deferred,
   value: Result<mem::MaybeUninit<T::Output>>,
   napi_async_work: sys::napi_async_work,
