@@ -130,6 +130,7 @@ pub mod Status {
 }
 
 pub type napi_callback =
+  // Option is equivalent to pointer in c/c++
   Option<unsafe extern "C" fn(env: napi_env, info: napi_callback_info) -> napi_value>;
 pub type napi_finalize = Option<
   unsafe extern "C" fn(env: napi_env, finalize_data: *mut c_void, finalize_hint: *mut c_void),
