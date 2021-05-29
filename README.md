@@ -119,7 +119,7 @@ napi-build = "1"
 And create `build.rs` in your own project:
 
 ```rust
-// build.rs
+// build.rs build.rs located in project root will be runned before the actual building
 extern crate napi_build;
 
 fn main() {

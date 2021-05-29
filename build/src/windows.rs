@@ -99,7 +99,8 @@ pub fn setup() {
       node_lib_file_path.to_str().unwrap()
     ));
   }
-
+  // messages prefixed with cargo: and printed in the stdout will be recognized as command if valid by cargo
+  // this line tells cargo to link the node library when building
   println!(
     "cargo:rustc-link-lib={}",
     node_lib_file_path.file_stem().unwrap().to_str().unwrap()
